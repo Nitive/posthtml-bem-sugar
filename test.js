@@ -35,8 +35,8 @@ const defaults = {
 const test = testCreator(defaults)
 
 describe('getClassList', () => {
-  it('validation', () => {
-    R.partial(getClassList, [123]).should.throw('getClassList argument should be a string')
+  it('should throws if angument is not a string', () => {
+    R.partial(getClassList, [123]).should.throw()
   })
 
   it('should right process emtry string', () => {
