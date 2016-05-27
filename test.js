@@ -149,4 +149,49 @@ describe('element', () => {
     '<div class="__element another-class and-more"></div>',
     '<div class="another-class and-more" elem="element"></div>'
   )
+
+  test(
+    'should works with block',
+    '<div class="-block __element"></div>',
+    '<div block="block" elem="element"></div>'
+  )
+})
+
+describe('mods', () => {
+  test(
+    'should change prefixed class to mods="mod:value"',
+    '<div class="_mod_value"></div>',
+    '<div mods="mod:value"></div>'
+  )
+
+  test(
+    'should change prefixed class to mods="mod"',
+    '<div class="_mod"></div>',
+    '<div mods="mod"></div>'
+  )
+
+  test(
+    'should works with different prefix and delimiter',
+    '<div class="m-mod--value"></div>',
+    '<div mods="mod:value"></div>',
+    { modPrefix: 'm-', modDlmtr: '--' }
+  )
+
+  test(
+    'should keep another classes',
+    '<div class="_mod another-class and-more"></div>',
+    '<div class="another-class and-more" mods="mod"></div>'
+  )
+
+  test(
+    'should works with block',
+    '<div class="-block _mod"></div>',
+    '<div block="block" mods="mod"></div>'
+  )
+
+  test(
+    'should works with element',
+    '<div class="__element _mod_value"></div>',
+    '<div elem="element" mods="mod_value"></div>'
+  )
 })
