@@ -229,17 +229,26 @@ describe('mods', () => {
 
 describe('full', () => {
   fullTest(
-    'should compile jade',
+    'should compile block',
     '.-block my block',
     '<div class="block">my block</div>'
   )
 
   fullTest(
-    'should compile jade',
+    'should compile element',
     `.-block
       .__element content`,
     `<div class="block">
       <div class="block__element">content</div>
+    </div>`
+  )
+
+  fullTest(
+    'should compile mods',
+    `.-block._single._more_mods
+      .__element._mod_value content`,
+    `<div class="block block_single block_more_mods">
+      <div class="block__element block__element_mod_value">content</div>
     </div>`
   )
 })
