@@ -13,12 +13,13 @@ const {
 
 
 
-const testCreator = defaultConfig => (discription, input, output, config) => {
+const testCreator = ({ defaults = {}, useBefore = [], useAfter = [] } = {}) =>
+(discription, input, output, config) => {
   it(discription, done => {
-    const resultConfig = R.merge(defaultConfig, config || {})
+    const resultConfig = R.merge(defaults, config || {})
+    const plugins = [...useBefore, bemSugar(resultConfig), ...useAfter]
 
-    posthtml()
-      .use(bemSugar(resultConfig))
+    plugins.reduce((processor, plugin) => processor.use(plugin), posthtml())
       .process(input)
       .then(result => {
         result.html.should.be.equal(output)
@@ -35,7 +36,13 @@ const defaults = {
   modDlmtr: '_',
 }
 
-const test = testCreator(defaults)
+
+const test = testCreator({ defaults })
+const fullTest = testCreator({
+  defaults,
+  useBefore: [require('posthtml-jade')()],
+  useAfter: [require('posthtml-bem')()],
+})
 
 describe('getClassList', () => {
   it('should throws if angument is not a string', () => {
@@ -199,5 +206,22 @@ describe('mods', () => {
     'should works with element',
     '<div class="__element _mod_value _another_mod"></div>',
     '<div elem="element" mods="mod:value another:mod"></div>'
+  )
+})
+
+describe('full', () => {
+  fullTest(
+    'should compile jade',
+    '.-block my block',
+    '\n<div class="block">my block</div>'
+  )
+
+  fullTest(
+    'should compile jade',
+    `.-block
+      .__element content`,
+    `\n<div class="block">
+  <div class="block__element">content</div>
+</div>`
   )
 })

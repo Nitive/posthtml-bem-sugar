@@ -21,7 +21,9 @@
     "eslint": "^2.4.0",
     "eslint-config-as": "^0.1.5",
     "mocha": "^2.5.3",
-    "mocha-clean": "^1.0.0"
+    "mocha-clean": "^1.0.0",
+    "posthtml-bem": "^0.2.2",
+    "posthtml-jade": "^0.8.2"
   },
   "repository": {
     "type": "git",
