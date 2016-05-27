@@ -1,6 +1,6 @@
 {
   "name": "posthtml-bem-sugar",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PostHTML plugin for support to simplify the maintenance of BEM naming structure in jade based on prefixes.",
   "scripts": {
     "lint": "eslint .",
