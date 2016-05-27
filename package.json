@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "pretest": "npm run lint",
     "tdd": "npm test -- -w",
-    "test": "mocha test.js"
+    "test": "mocha -r mocha-clean test.js"
   },
   "main": "src/index.js",
   "files": [
@@ -20,7 +20,8 @@
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
     "eslint-config-as": "^0.1.5",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "mocha-clean": "^1.0.0"
   },
   "repository": {
     "type": "git",
