@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "description": "Make bem blocks using class names prefixes",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "test": "mocha test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-as": "^0.1.5"
   },
   "repository": {
     "type": "git",
