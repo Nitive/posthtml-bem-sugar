@@ -7,9 +7,12 @@ const getClassList = exports.getClassList = R.pipe(
 )
 
 
-const startWith = str => R.pipe(
-  R.take(str.length),
-  R.equals(str)
+const startWith = exports.startWith = R.uncurryN(
+  2,
+  str => R.pipe(
+    R.take(str.length),
+    R.equals(str)
+  )
 )
 
 const process = R.curry(({ prefixProp, attr }, config, node) => {

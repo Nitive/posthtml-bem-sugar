@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+
 const R = require('ramda')
 const posthtml = require('posthtml')
 require('chai').should()
@@ -6,6 +8,7 @@ const {
   default: bemSugar,
   getClassList,
   processBlock,
+  startWith,
 } = require('./src/')
 
 
@@ -58,6 +61,19 @@ describe('getClassList', () => {
 
   it('should right process falsy values', () => {
     getClassList('0 false null undefined').should.be.eql(['0', 'false', 'null', 'undefined'])
+  })
+})
+
+
+describe('startWith', () => {
+  it('should works', () => {
+    startWith('12', '1234').should.be.true
+    startWith('12', '234').should.be.false
+  })
+
+  it('should be curried', () => {
+    startWith('12')('1234').should.be.true
+    startWith('12')('234').should.be.false
   })
 })
 
