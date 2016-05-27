@@ -1,0 +1,25 @@
+{
+  "name": "posthtml-bem-sugar",
+  "version": "0.1.0",
+  "description": "Make bem blocks using class names prefixes",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nitive/posthtml-bem-sugar.git"
+  },
+  "keywords": [
+    "posthtml",
+    "bem"
+  ],
+  "author": "Maxim Samoilov <nitive@icloud.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nitive/posthtml-bem-sugar/issues"
+  },
+  "homepage": "https://github.com/Nitive/posthtml-bem-sugar#readme"
+}
