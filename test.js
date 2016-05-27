@@ -12,13 +12,13 @@ const {
 
 const testCreator = defaultConfig => (discription, input, output, config) => {
   it(discription, done => {
-    const resultConfig = Object.assign(defaultConfig, config || {})
+    const resultConfig = R.merge(defaultConfig, config || {})
 
     posthtml()
       .use(bemSugar(resultConfig))
       .process(input)
       .then(result => {
-        output.should.be.equal(result.html)
+        result.html.should.be.equal(output)
         done()
       })
       .catch(done)
@@ -109,13 +109,28 @@ describe('block', () => {
 
   test(
     'should keep another classes',
-    '<div class="b-block another-class and-more"></div>',
+    '<div class="-block another-class and-more"></div>',
     '<div class="another-class and-more" block="block"></div>'
+  )
+})
+
+describe('element', () => {
+  test(
+    'should change prefixed class to elem="unprefixed-class"',
+    '<div class="__element"></div>',
+    '<div elem="element"></div>'
+  )
+
+  test(
+    'should works with different prefix',
+    '<div class="e-element"></div>',
+    '<div elem="element"></div>',
+    { elemPrefix: 'e-' }
   )
 
   test(
     'should keep another classes',
-    '<div class="b-block another-class and-more"></div>',
-    '<div class="another-class and-more" block="block"></div>'
+    '<div class="__element another-class and-more"></div>',
+    '<div class="another-class and-more" elem="element"></div>'
   )
 })

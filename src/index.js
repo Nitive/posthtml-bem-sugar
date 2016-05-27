@@ -1,12 +1,10 @@
 const R = require('ramda')
 
-const getClassList = R.pipe(
+const getClassList = exports.getClassList = R.pipe(
   R.unless(R.is(String), () => { throw new Error('getClassList argument should be a string') }),
   R.split(' '),
   R.reject(R.equals(''))
 )
-
-exports.getClassList = getClassList
 
 
 const startWith = str => R.pipe(
@@ -14,34 +12,53 @@ const startWith = str => R.pipe(
   R.equals(str)
 )
 
-const processBlock = (config, node) => {
-  const classList = getClassList(node.attrs.class)
-  const isBlock = startWith(config.blockPrefix)
+const process = R.curry(({ prefixProp, attr }, config, node) => {
+  if (!node.attrs.class) return node
 
-  const getBlockName = R.pipe(
-    R.find(isBlock),
-    R.slice(config.blockPrefix.length, Infinity)
+  const classList = getClassList(node.attrs.class)
+  const isClassToProcess = startWith(config[prefixProp])
+
+  const getClassWithoutPrefix = R.pipe(
+    R.find(isClassToProcess),
+    R.ifElse(
+      R.identity,
+      R.slice(config[prefixProp].length, Infinity),
+      R.F
+    )
   )
 
-  const blockName = getBlockName(classList)
-  const newClassList = R.reject(isBlock, classList)
+  const classWithoutPrefix = getClassWithoutPrefix(classList)
+  if (!classWithoutPrefix) return node
+
+  const newClassList = R.reject(isClassToProcess, classList)
 
   return R.pipe(
-    R.assocPath(['attrs', 'block'], blockName),
+    R.assocPath(['attrs', attr], classWithoutPrefix),
     newClassList.length
       ? R.assocPath(['attrs', 'class'], R.join(' ', newClassList))
       : R.dissocPath(['attrs', 'class'])
   )(node)
-}
+})
 
-exports.processBlock = processBlock
+
+const processBlock = exports.processBlock = process({
+  prefixProp: 'blockPrefix',
+  attr: 'block',
+})
+
+
+const processElement = exports.processElement = process({
+  prefixProp: 'elemPrefix',
+  attr: 'elem',
+})
 
 
 exports.default = config => { // eslint-disable-line
   return function posthtmlBemSugar(tree) {
-    tree.match({ attrs: { class: true } }, node => {
-      return processBlock(config, node)
-    })
+    tree.match({ attrs: { class: true } }, R.pipe(
+      processBlock(config),
+      processElement(config)
+    ))
     return tree
   }
 }
