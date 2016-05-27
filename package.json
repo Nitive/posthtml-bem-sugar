@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "description": "Make bem blocks using class names prefixes",
   "scripts": {
+    "lint": "eslint src/",
+    "pretest": "npm run lint",
     "test": "mocha test.js"
   },
   "main": "src/index.js",
