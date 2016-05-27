@@ -15,22 +15,30 @@ const startWith = exports.startWith = R.uncurryN(
   )
 )
 
-const process = R.curry(({ prefixProp, attr }, config, node) => {
+const slicePrefix = prefixProp => config => {
+  return R.slice(config[prefixProp].length, Infinity)
+}
+
+const process = R.curry(({
+  prefixProp,
+  attr,
+  processClass = slicePrefix(prefixProp),
+}, config, node) => {
   if (!node.attrs.class) return node
 
   const classList = getClassList(node.attrs.class)
   const isClassToProcess = startWith(config[prefixProp])
 
-  const getClassWithoutPrefix = R.pipe(
+  const getProcessedClass = R.pipe(
     R.find(isClassToProcess),
     R.ifElse(
       R.identity,
-      R.slice(config[prefixProp].length, Infinity),
+      processClass(config),
       R.F
     )
   )
 
-  const classWithoutPrefix = getClassWithoutPrefix(classList)
+  const classWithoutPrefix = getProcessedClass(classList)
   if (!classWithoutPrefix) return node
 
   const newClassList = R.reject(isClassToProcess, classList)
