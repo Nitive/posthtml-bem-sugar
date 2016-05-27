@@ -88,3 +88,5 @@ exports.default = config => { // eslint-disable-line
     return tree
   }
 }
+
+module.exports = Object.assign(exports.default, exports)

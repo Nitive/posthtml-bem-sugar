@@ -4,13 +4,8 @@ const R = require('ramda')
 const posthtml = require('posthtml')
 require('chai').should()
 
-const {
-  default: bemSugar,
-  getClassList,
-  processBlock,
-  startWith,
-} = require('./src/')
-
+const bemSugar = require('./src/')
+const { getClassList, processBlock, startWith } = bemSugar
 
 
 const testCreator = ({ defaults = {}, useBefore = [], useAfter = [] } = {}) =>
