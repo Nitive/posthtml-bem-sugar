@@ -1,7 +1,7 @@
 {
   "name": "posthtml-bem-sugar",
   "version": "0.1.0",
-  "description": "Make bem blocks using class names prefixes",
+  "description": "PostHTML plugin for support to simplify the maintenance of BEM naming structure in jade based on prefixes.",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
