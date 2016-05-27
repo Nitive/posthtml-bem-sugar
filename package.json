@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
+    "tdd": "npm test -- -w",
     "test": "mocha test.js"
   },
   "main": "src/index.js",
@@ -12,7 +13,8 @@
     "src/"
   ],
   "dependencies": {
-    "posthtml": "^0.8.7"
+    "posthtml": "^0.8.7",
+    "ramda": "^0.21.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
