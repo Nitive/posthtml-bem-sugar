@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Make bem blocks using class names prefixes",
   "scripts": {
-    "lint": "eslint src/",
+    "lint": "eslint .",
     "pretest": "npm run lint",
     "test": "mocha test.js"
   },
@@ -11,7 +11,9 @@
   "files": [
     "src/"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "posthtml": "^0.8.7"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
