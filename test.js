@@ -38,11 +38,25 @@ const defaults = {
 
 
 const test = testCreator({ defaults })
-const fullTest = testCreator({
-  defaults,
-  useBefore: [require('posthtml-jade')()],
-  useAfter: [require('posthtml-bem')()],
-})
+
+
+// wrapper which delete extra left spaces in template strings
+// useful for html code
+const removeTemplateStringsSpaces = R.pipe(
+  // remove 4 spaces from start because there are 4 in tests
+  str => `\n    ${str}`,
+  R.split('\n'),
+  R.map(R.slice(4, Infinity)),
+  R.join('\n')
+)
+
+const fullTest = (discription, input, output, config) =>
+  testCreator({
+    defaults,
+    useBefore: [require('posthtml-jade')()],
+    useAfter: [require('posthtml-bem')()],
+  })(discription, input, removeTemplateStringsSpaces(output), config)
+
 
 describe('getClassList', () => {
   it('should throws if angument is not a string', () => {
@@ -116,6 +130,7 @@ describe('processBlock', () => {
   })
 })
 
+
 describe('block', () => {
   test(
     'should change prefixed class to block="unprefixed-class"',
@@ -136,6 +151,7 @@ describe('block', () => {
     '<div class="another-class and-more" block="block"></div>'
   )
 })
+
 
 describe('element', () => {
   test(
@@ -163,6 +179,7 @@ describe('element', () => {
     '<div block="block" elem="element"></div>'
   )
 })
+
 
 describe('mods', () => {
   test(
@@ -209,19 +226,20 @@ describe('mods', () => {
   )
 })
 
+
 describe('full', () => {
   fullTest(
     'should compile jade',
     '.-block my block',
-    '\n<div class="block">my block</div>'
+    '<div class="block">my block</div>'
   )
 
   fullTest(
     'should compile jade',
     `.-block
       .__element content`,
-    `\n<div class="block">
-  <div class="block__element">content</div>
-</div>`
+    `<div class="block">
+      <div class="block__element">content</div>
+    </div>`
   )
 })
