@@ -2,10 +2,13 @@
   "name": "posthtml-bem-sugar",
   "version": "0.1.0",
   "description": "Make bem blocks using class names prefixes",
-  "main": "index.js",
   "scripts": {
     "test": "mocha test.js"
   },
+  "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
   "dependencies": {},
   "devDependencies": {
     "eslint": "^2.4.0",
