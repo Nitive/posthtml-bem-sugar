@@ -1,6 +1,13 @@
+const R = require('ramda')
 const posthtml = require('posthtml')
-const { default: bemSugar, getClassList, processBlock } = require('./src/')
 require('chai').should()
+
+const {
+  default: bemSugar,
+  getClassList,
+  processBlock,
+} = require('./src/')
+
 
 
 const testCreator = defaultConfig => (discription, input, output, config) => {
@@ -28,35 +35,35 @@ const defaults = {
 const test = testCreator(defaults)
 
 describe('getClassList', () => {
-  it('getClassList validation', () => {
-    (() => getClassList(123)).should.throw('getClassList argument should be a string')
+  it('validation', () => {
+    R.partial(getClassList, [123]).should.throw('getClassList argument should be a string')
   })
 
-  it('getClassList should right process emtry string', () => {
+  it('should right process emtry string', () => {
     getClassList('').should.be.eql([])
   })
 
-  it('getClassList should right process one class', () => {
+  it('should right process one class', () => {
     getClassList('class').should.be.eql(['class'])
   })
 
-  it('getClassList should right process few classes', () => {
+  it('should right process few classes', () => {
     getClassList('some classes').should.be.eql(['some', 'classes'])
   })
 
-  it('getClassList should right process extra spaces', () => {
+  it('should right process extra spaces', () => {
     getClassList('some  classes').should.be.eql(['some', 'classes'])
     getClassList('   some  classes   ').should.be.eql(['some', 'classes'])
   })
 
-  it('getClassList should right process falsy values', () => {
+  it('should right process falsy values', () => {
     getClassList('0 false null undefined').should.be.eql(['0', 'false', 'null', 'undefined'])
   })
 })
 
 
 describe('processBlock', () => {
-  it('processBlock should remove empty class', () => {
+  it('should remove empty class', () => {
     const tree = {
       tag: 'div',
       attrs: { class: '-block' },
@@ -70,7 +77,7 @@ describe('processBlock', () => {
     })
   })
 
-  it('processBlock should keep another classes', () => {
+  it('should keep another classes', () => {
     const tree = {
       tag: 'div',
       attrs: { class: '-block js-something' },
@@ -84,4 +91,31 @@ describe('processBlock', () => {
       },
     })
   })
+})
+
+describe('block', () => {
+  test(
+    'should change prefixed class to block="unprefixed-class"',
+    '<div class="-block"></div>',
+    '<div block="block"></div>'
+  )
+
+  test(
+    'should works with different prefix',
+    '<div class="b-block"></div>',
+    '<div block="block"></div>',
+    { blockPrefix: 'b-' }
+  )
+
+  test(
+    'should keep another classes',
+    '<div class="b-block another-class and-more"></div>',
+    '<div class="another-class and-more" block="block"></div>'
+  )
+
+  test(
+    'should keep another classes',
+    '<div class="b-block another-class and-more"></div>',
+    '<div class="another-class and-more" block="block"></div>'
+  )
 })

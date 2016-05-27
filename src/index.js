@@ -39,6 +39,9 @@ exports.processBlock = processBlock
 
 exports.default = config => { // eslint-disable-line
   return function posthtmlBemSugar(tree) {
+    tree.match({ attrs: { class: true } }, node => {
+      return processBlock(config, node)
+    })
     return tree
   }
 }
