@@ -15,9 +15,9 @@ const startWith = exports.startWith = R.uncurryN(
   )
 )
 
-const slicePrefix = prefixProp => config => {
+const slicePrefix = R.uncurryN(3, prefixProp => config => {
   return R.slice(config[prefixProp].length, Infinity)
-}
+})
 
 const process = R.curry(({
   prefixProp,
@@ -30,12 +30,9 @@ const process = R.curry(({
   const isClassToProcess = startWith(config[prefixProp])
 
   const getProcessedClass = R.pipe(
-    R.find(isClassToProcess),
-    R.ifElse(
-      R.identity,
-      processClass(config),
-      R.F
-    )
+    R.filter(isClassToProcess),
+    R.map(processClass(config)),
+    R.join(' ')
   )
 
   const classWithoutPrefix = getProcessedClass(classList)
@@ -63,12 +60,30 @@ const processElement = exports.processElement = process({
   attr: 'elem',
 })
 
+const getModValuePair = (mod, value) => {
+  return R.pipe(
+    R.filter(R.identity),
+    R.join(':')
+  )([mod, value])
+}
+
+const processMods = exports.processMods = process({
+  prefixProp: 'modPrefix',
+  attr: 'mods',
+  processClass: config => className => {
+    const classWithoutPrefix = slicePrefix('modPrefix', config, className)
+    const [mod, value] = R.split(config.modDlmtr, classWithoutPrefix)
+    return getModValuePair(mod, value)
+  },
+})
+
 
 exports.default = config => { // eslint-disable-line
   return function posthtmlBemSugar(tree) {
     tree.match({ attrs: { class: true } }, R.pipe(
       processBlock(config),
-      processElement(config)
+      processElement(config),
+      processMods(config)
     ))
     return tree
   }

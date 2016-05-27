@@ -192,6 +192,12 @@ describe('mods', () => {
   test(
     'should works with element',
     '<div class="__element _mod_value"></div>',
-    '<div elem="element" mods="mod_value"></div>'
+    '<div elem="element" mods="mod:value"></div>'
+  )
+
+  test(
+    'should works with element',
+    '<div class="__element _mod_value _another_mod"></div>',
+    '<div elem="element" mods="mod:value another:mod"></div>'
   )
 })
