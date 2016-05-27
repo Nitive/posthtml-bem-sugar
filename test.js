@@ -26,6 +26,10 @@ const test = testCreator({
 })
 
 describe('utilities', () => {
+  it('getClassList validation', () => {
+    (() => getClassList(123)).should.throw('getClassList argument should be a string')
+  })
+
   it('getClassList', () => {
     getClassList('some classes').should.be.eql(['some', 'classes'])
     getClassList('some  classes').should.be.eql(['some', 'classes'])

@@ -1,6 +1,7 @@
 const R = require('ramda')
 
 const getClassList = exports.getClassList = R.pipe(
+  R.unless(R.is(String), () => { throw new Error('getClassList argument should be a string') }),
   R.split(' '),
   R.reject(R.equals(''))
 )
