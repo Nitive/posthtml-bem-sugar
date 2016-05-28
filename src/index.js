@@ -78,12 +78,22 @@ const processMods = exports.processMods = process({
 })
 
 
+const defaultConfig = {
+  blockPrefix: '-',
+  elemPrefix: '__',
+  modPrefix: '_',
+  modDlmtr: '_',
+}
+
+
 exports.default = config => { // eslint-disable-line
+  const resultConfig = R.merge(defaultConfig, config)
+
   return function posthtmlBemSugar(tree) {
     tree.match({ attrs: { class: true } }, R.pipe(
-      processBlock(config),
-      processElement(config),
-      processMods(config)
+      processBlock(resultConfig),
+      processElement(resultConfig),
+      processMods(resultConfig)
     ))
     return tree
   }
