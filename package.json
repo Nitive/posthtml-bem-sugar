@@ -1,12 +1,13 @@
 {
   "name": "posthtml-bem-sugar",
-  "version": "0.1.1",
+  "version": "0.0.0-semantically-released",
   "description": "PostHTML plugin for support to simplify the maintenance of BEM naming structure in jade based on prefixes.",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
     "tdd": "npm test -- -w",
-    "test": "mocha -r mocha-clean test.js"
+    "test": "mocha -r mocha-clean test.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "main": "src/index.js",
   "files": [
@@ -23,11 +24,12 @@
     "mocha": "^2.5.3",
     "mocha-clean": "^1.0.0",
     "posthtml-bem": "^0.2.2",
-    "posthtml-jade": "^0.8.2"
+    "posthtml-jade": "^0.8.2",
+    "semantic-release": "^4.3.5"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nitive/posthtml-bem-sugar.git"
+    "url": "https://github.com/Nitive/posthtml-bem-sugar.git"
   },
   "keywords": [
     "posthtml",
