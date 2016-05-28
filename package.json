@@ -21,6 +21,7 @@
     "chai": "^3.5.0",
     "eslint": "^2.4.0",
     "eslint-config-as": "^0.1.5",
+    "eslint-plugin-import": "^1.8.1",
     "mocha": "^2.5.3",
     "mocha-clean": "^1.0.0",
     "posthtml-bem": "^0.2.2",
