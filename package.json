@@ -34,6 +34,8 @@
   },
   "keywords": [
     "posthtml",
+    "posthtml-plugin",
+    "jade",
     "bem"
   ],
   "author": "Maxim Samoilov <nitive@icloud.com>",
