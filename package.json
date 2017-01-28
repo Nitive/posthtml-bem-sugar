@@ -14,19 +14,19 @@
     "src/"
   ],
   "dependencies": {
-    "posthtml": "^0.8.7",
-    "ramda": "^0.21.0"
+    "posthtml": "^0.9.2",
+    "ramda": "^0.23.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^2.4.0",
+    "eslint": "^3.14.1",
     "eslint-config-as": "^0.1.5",
-    "eslint-plugin-import": "^1.8.1",
-    "mocha": "^2.5.3",
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0",
     "mocha-clean": "^1.0.0",
     "posthtml-bem": "^0.2.2",
     "posthtml-jade": "^0.8.2",
-    "semantic-release": "^4.3.5"
+    "semantic-release": "^6.3.2"
   },
   "repository": {
     "type": "git",
